@@ -1,9 +1,8 @@
 ---
 - hosts: nginx
-  sudo: yes
-  
-  tasks:
+  become: yes
 
+  tasks:
   - name: install nginx
     apt: name=nginx state=installed update_cache=yes
 
@@ -20,6 +19,5 @@
     service: name=nginx state=started
 
   handlers:
-
   - name: restart nginx
     service: name=nginx state=restarted
