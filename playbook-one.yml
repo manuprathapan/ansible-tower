@@ -2,5 +2,5 @@
   tasks:
   - name: Ansible create file if it doesn't exist example
     file:
-      path: {{file_path}}
+      path: "{{ file_path }}"
       state: touch
