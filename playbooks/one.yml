@@ -8,6 +8,7 @@
 
   - name: start ntp
     service: name=nginx state=started
+    
   - name: Update Shellshock (Debian)
     apt: name=bash
        state=latest
@@ -15,11 +16,11 @@
     when: ansible_os_family == "Debian"
 
   - name: Update OpenSSL and OpenSSH (Debian)
-      apt: name={{ item }}
-           state=latest
-           update_cache=yes
-      with_items:
-        - openssl
-        - openssh-client
-        - openssh-server
-      when: ansible_os_family == "Debian"
+    apt: name={{ item }}
+         state=latest
+         update_cache=yes
+    with_items:
+      - openssl
+      - openssh-client
+      - openssh-server
+    when: ansible_os_family == "Debian"
