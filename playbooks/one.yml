@@ -6,14 +6,20 @@
   - name: install nginx
     apt: name=nginx state=installed update_cache=yes
 
-  - name: deploy website content
-    git: repo=https://github.com/jweissig/episode-47.git
-         dest=/usr/share/nginx/html/
-         version=release-0.01
-
   - name: start ntp
     service: name=nginx state=started
+  - name: Update Shellshock (Debian)
+    apt: name=bash
+       state=latest
+       update_cache=yes
+    when: ansible_os_family == "Debian"
 
-  handlers:
-  - name: restart nginx
-    service: name=nginx state=restarted
+  - name: Update OpenSSL and OpenSSH (Debian)
+      apt: name={{ item }}
+           state=latest
+           update_cache=yes
+      with_items:
+        - openssl
+        - openssh-client
+        - openssh-server
+      when: ansible_os_family == "Debian"
